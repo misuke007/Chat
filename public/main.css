@@ -1,0 +1,144 @@
+.user-box{
+    display: flex;
+    margin-top: 10px;
+}
+.user-profil{
+    width: 60px;
+    height: 60px;
+    background-color:lightgray;
+    border-radius: 50%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.user-box h3{
+    position: relative;
+    top: 15px;
+    left:2px;
+}
+.user-box a{
+    background-color: lightgrey;
+    font-size: 30px;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    text-align: center;
+    margin-left: auto;
+    margin-top: 10px;
+    color: unset;
+}
+.user-box a i{
+    position: relative;
+    left: 2px;
+}
+
+.conv{
+    display: flex;
+    margin-top: 5px;
+}
+.conv:hover{
+    color: unset;
+    text-decoration: none;
+}
+.conv .info{
+    margin-left: 8px;
+}
+.conv h4{
+    margin:0;
+    margin-top: 5px;
+}
+
+.user-info{
+    display: flex;
+    margin-top: 5px;
+}
+.user-info h4{
+    position: relative;
+    margin-top: 15px;
+    left: 10px;
+}
+.user-info a{
+    font-size: 30px;
+    margin-right: 20px;
+    margin-top: 5px;
+    margin-left: 5px;
+}
+
+.room-header{
+    border-bottom: solid 2px lightgray;
+    position: sticky;
+    top: 0;
+    padding-bottom: 5px;
+    z-index: 999;
+    background-color: white;
+}
+
+.sender{
+    max-width: 300px;
+    width: fit-content;
+    padding:10px;
+    background-color: rgb(234,234,234);
+    margin-left: 10px;
+    margin-top: 10px;
+    border-radius: 8px;
+}
+
+.me{
+    max-width: 300px;
+    width: fit-content;
+    padding:10px;
+    background-color: rgb(36, 135, 168);
+    color: white;
+    margin-left: auto;
+    margin-right: 10px;
+    margin-top: 10px;
+    border-radius: 8px;
+}
+
+.send-message{
+    position: sticky;
+    bottom: 0;
+    border-top: solid 1px lightgray;
+    width: 100%;
+    background-color: white;
+    padding:10px;
+    margin-top: 10px;
+}
+
+.input-control{
+    width: 90%;
+    padding: 10px;
+    border:solid 1px lightgray;
+    border-radius: 60px;
+}
+
+.btn-control{
+    font-size: 25px;
+    background-color: white;
+    border:none;
+    color: rgb(36, 135, 168);
+}
+
+.user-profil-info{
+    display: flex;
+    padding-left: 10px;
+    color: unset;
+    text-decoration: none;
+}
+
+.user-profil-info h4{
+   position: relative;
+   left: 10px;
+   top: 15px;
+}
+
+.user-profil-info:hover{
+   color: unset;
+   text-decoration: none;
+ }
+/* 
+Users
+Room = stocker anle meesage:roomname , message ,sender_id
+conversation : UserId , receiverId,message,vu
+*/

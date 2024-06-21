@@ -1,0 +1,69 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="user-box">
+                <div class="user-profil" style="background-image:url('/profil/<%= me.profil %>') ;"></div>
+                <h3><%= me.fullname %></h3>
+                <a href="/logout" class="logout">
+                    <i class="fa fa-sign-out"></i>
+                </a>
+            </div>
+        </div>
+        <div class="col-12">
+            <a href="/start-conversation" class="btn btn-primary form-control">
+                <i class="fa fa-search"></i> Rechercher
+            </a>
+        </div>
+        <div class="col-12 conversation-banner">
+            <% for(user of data) { %>
+                <% if(user.vu) { %>
+                    <a class="conv user-<%= user.User.id %>" href="/room/<%= user.User.id %>/<%= user.room %>" >
+                        <div class="user-profil" style="background-image:url('/profil/<%= user.User.profil %>') ;"></div>
+                        <div class="info">
+                            <h4><%= user.User.fullname %></h4>
+                            <span><%= user.message %></span>
+                        </div>
+                    </a>
+                <% }else { %>
+                    <a class="conv user-<%= user.User.id %>" href="/room/<%= user.User.id %>/<%= user.room %>" >
+                        <div class="user-profil" style="background-image:url('/profil/<%= user.User.profil %>') ;"></div>
+                        <div class="info">
+                            <h4><b><%= user.User.fullname %></b></h4>
+                            <span><b><%= user.message %></b></span>
+                        </div>
+                    </a>
+                 <% } %>  
+            
+            <% } %>
+        </div>
+    </div>
+</div>
+<input type="hidden" name="" id="me" value="<%= me.id %>">
+<script src="/client-dist/socket.io.min.js"></script>
+<script>
+    let socket = io()
+
+    const me = document.getElementById('me')
+    const banner =document.querySelector('.conversation-banner')
+    
+    socket.emit('conversation-room' , me.value)
+
+    socket.on('conversation' ,(message,user,room) =>{
+        //console.log(user,message)
+
+        const conv = document.querySelector(`.user-${user.id}`)
+        conv.style.display = 'none'
+        const link = document.createElement('a')
+        link.classList.add('conv')
+        link.classList.add(`user-${user.id}`)
+        link.setAttribute('href', `/room/${user.id}/${room}`)
+        link.innerHTML = `
+            <div class="user-profil" style="background-image:url('/profil/${user.profil}') ;"></div>
+            <div class="info">
+                <h4><b>${user.fullname}</b></h4>
+                <span><b>${message}</b></span>
+            </div>
+        `
+        banner.prepend(link)
+    })
+</script>

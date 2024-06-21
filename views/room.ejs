@@ -1,0 +1,118 @@
+<div class="container-fluid room-header">
+    <div class="row">
+        <div class="col-12">
+            <div class="user-info">
+                <a href="/conversation" class="leave"><i class="fa fa-arrow-left"></i></a>
+                <div class="user-profil" style="background-image:url('/profil/<%= user.profil %>') ;"></div>
+                <h4><%= user.fullname %></h4>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 msg-container">
+            <% for(message of messages) { %>
+                <% if(message.sender_id == me.id) { %> 
+                    <div class="message-banner">
+                        <div class="me">
+                            <%= message.message %>
+                        </div>
+                    </div>
+                 <% }else { %>
+                    <div class="message-banner">
+                        <div class=" sender ">
+                            <%= message.message %>
+                        </div>
+                    </div>
+                 <% } %>
+            <% } %>
+            
+            
+
+        </div>
+    </div>
+</div>
+<form class="send-message">
+    <input type="hidden" id="roomname" value="<%= roomName %>">
+    <input type="hidden" id="someone" value="<%= me.id %>">
+    <input type="hidden" id="sender" value="<%= user.id %>">
+        <input type="text" name="message" class="input-control message" placeholder="Votre message.....">
+        <button type="submit" class="btn-control">
+            <i class="fa fa-send"></i>
+        </button>
+
+</form>
+<script src="/client-dist/socket.io.min.js"></script>
+
+<script>
+    function scrollToBottom(){
+        
+        setTimeout(()=>{
+            window.scrollTo(0,99999999999999999999999)
+        }, 100)
+    }
+    scrollToBottom()
+
+    let socket = io()
+
+    const roomname = document.getElementById('roomname')
+    const form = document.querySelector('.send-message')
+    const input = document.querySelector('.input-control')
+    const container = document.querySelector('.msg-container')
+    const someone = document.getElementById('someone')
+    const leave = document.querySelector('.leave')
+    const sender = document.getElementById('sender')
+    const message = document.querySelector('.message')
+
+   
+
+
+    socket.emit('join-room' , roomname.value,someone.value)
+
+    form.addEventListener('submit' , (e) =>{
+
+        e.preventDefault()
+
+        const div = document.createElement('div')
+        div.classList.add('message-banner')
+
+        let span = `
+            <div class='me'>
+                ${input.value}
+            </div>
+        `
+
+        div.innerHTML = span
+
+        socket.emit('send-message' , input.value, someone.value, sender.value,roomname.value)
+
+
+        container.appendChild(div)
+        input.value = ""
+        scrollToBottom()
+
+
+
+    })
+    
+    socket.on('private-room' ,(message) => {
+        socket.emit('set-vu' , roomname.value , sender.value)
+        const div = document.createElement('div')
+        div.classList.add('message-banner')
+
+        let span = `
+            <div class='sender'>
+                ${message}
+            </div>
+        `
+        div.innerHTML = span
+        container.append(div)
+        scrollToBottom()
+    })
+
+    leave.addEventListener('click' , () =>{
+        socket.emit('leave-room' , roomname.value)
+    })
+   
+</script>

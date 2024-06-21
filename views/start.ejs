@@ -1,0 +1,18 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="user-info">
+                <a href="/conversation"><i class="fa fa-arrow-left"></i></a>
+                <h4>Contact</h4>
+            </div>
+        </div>
+        <% for(person of realData) {%>
+            <div class="col-12 mt-2">
+                <a href="/start/<%= person.id %>" class="user-profil-info">
+                    <div class="user-profil" style="background-image:url('/profil/<%= person.profil %>') ;"></div>
+                    <h4><%= person.fullname %></h4>
+                </a>
+            </div>
+        <% } %>
+    </div>
+</div>
